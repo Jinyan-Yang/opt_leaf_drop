@@ -1,6 +1,8 @@
-lai.drop.opt.func(VPD = 1.5,E = 200,PAR = 8,TMAX = 30,lai.initial = 2,g1 = 4,r.turnover = 0.2,beta.lai = 0.1 
+tmp.df <- lai.drop.opt.func(VPD = 2,E = 200,PAR = 8,TMAX = 30,
+                            lai.initial = 1.5,g1 = 4,r.turnover = 0.03,beta.lai = 0.2 
                   ,beta.g1 = 0.38,beta.jmax = 0.38)
-
+plot(tmp.df$lai)
+plot(tmp.df$gpp)
 library(DEoptim)
 model.de.func <- function(pars,
                           VPD = 1.5,E = 200,PAR = 8,TMAX = 30,
@@ -17,7 +19,7 @@ model.de.func <- function(pars,
                               r.turnover = pars[1],
                               beta.lai = pars[2])
   
-  return(-sum(npp.sum$npp))
+  return(-sum(npp.df$npp))
 }
 
 
@@ -48,5 +50,5 @@ out.df <- get.turnover.func(VPD = 1.5,E = 200,PAR = 8,TMAX = 30,
                   lai.initial = 2,g1 = 4,beta.g1 = 0.38,beta.jmax = 0.38)
 
 
-OptBB.de.fit <- DEoptim(fn=model.de.func,lower=lower,upper=upper,
+
 

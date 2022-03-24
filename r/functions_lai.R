@@ -126,7 +126,7 @@ lai.drop.opt.func <- function (VPD,#kPa
   }
   # npp
   netfunc <- function(g1,LAI){
-    GPPfunc(g1,LAI) - mole.weight.c * mumole2mole  * 2 * h * LAI* Rlight
+    GPPfunc(g1,LAI) - mole.weight.c * mumole2mole  * 2 * h * LAI* Rdark
   }
   # 
   i = 2
@@ -148,7 +148,7 @@ lai.drop.opt.func <- function (VPD,#kPa
   soil.water <- c()
   soil.water[1] <- E
   # take a g1 threshold of 88%
-  while(swc.norm^beta.g1>0.12&lai.tmp>0){
+  while(swc.norm^beta.g1>0.12&lai.tmp>0.1){
     
     tran.tmp <- tran.func(LAI = lai.tmp,g1 = g1.tmp)
     # normlised swc
@@ -157,7 +157,7 @@ lai.drop.opt.func <- function (VPD,#kPa
     # 
     g1.tmp <- g1*swc.norm^beta.g1
     Jmax <- Jmax25 * swc.norm^ beta.jmax
-    lai.tmp <- lai.initial - lai.initial*r.turnover*(1-swc.norm)^beta.lai
+    lai.tmp <- lai.tmp - lai.tmp*r.turnover*(1-swc.norm)^beta.lai
     
     npp.vec[i] <- netfunc(g1 = g1.tmp,LAI = lai.tmp)
     gpp.vec[i] <- GPPfunc(g1 = g1.tmp,LAI = lai.tmp)
